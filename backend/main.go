@@ -8,6 +8,7 @@ import (
 func main() {
 	
 	cfg := config.LoadConfig()
+	config.InitSupabase()
 	server := api.NewServer(cfg)
 	server.Run()
 }

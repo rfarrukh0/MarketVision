@@ -41,6 +41,7 @@ func NewServer(cfg *config.Config) *Server {
 func (s *Server) SetupRoutes() {
 	s.router.GET("/health", HealthCheck) 
 	s.router.POST("/generate", GenerateProductDescription(s.service))
+	s.router.GET("/supabase-health", SupabaseHealthCheck)	
 }
 
 // starts server 

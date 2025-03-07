@@ -6,15 +6,25 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rfarrukh0/ai-product-description/internal/config"
 	"github.com/rfarrukh0/ai-product-description/internal/service"
 )
 
-// simple endpoint to determint if API is running
+// simple endpoint to determint if gpt API is running
 func HealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "success",
 		"message": "API is up and running!",
 	})
+}
+
+// simple endpoint to dermine if supabase is live
+func SupabaseHealthCheck(c *gin.Context) {
+	if config.Supabase == nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Supabase is not initialized"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Supabase is connected successfully"})
 }
 
 // handles image input and generates the product description
