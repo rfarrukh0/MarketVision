@@ -1,6 +1,6 @@
 # 🧠 MarketVision
 
-MarketVision is a web app that uses AI to generate complete marketing content from a product image. Just upload or paste an image URL, and it returns a full product description, SEO keywords, hashtags, audience, pricing, and more — all powered by GPT-4o.
+MarketVision is a web app that uses AI to generate complete marketing content from a product image. Just upload or paste an image URL, and it returns a full product description, SEO keywords, hashtags, audience, pricing, and more.
 
 ---
 ![Homepage](https://i.imgur.com/wZKSnNS.png)
