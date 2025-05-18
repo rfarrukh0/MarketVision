@@ -13,10 +13,14 @@ type Config struct {
 }
 
 func LoadConfig() *Config {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("ENV") != "production" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Println("Warning: .env file not found (expected in production)")
+		}	
 	}
+
+
 
 	return &Config{
 		OpenAIKey: os.Getenv("OPENAI_API_KEY"),
