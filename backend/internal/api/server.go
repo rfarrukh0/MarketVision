@@ -20,7 +20,7 @@ type Server struct {
 func NewServer(cfg *config.Config) *Server {
 	r := gin.Default()  // create new gin router with def middleware
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://marketvision.vercel.app", "http://localhost:3000"},
+		AllowOrigins: 	  []string{"*"},
 		AllowMethods:     []string{"POST", "GET", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
