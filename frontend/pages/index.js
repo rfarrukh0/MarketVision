@@ -113,7 +113,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append('image', selectedFile);
     try {
-      const res = await fetch('http://localhost:8080/generate', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generate`, {
         method: 'POST',
         body: formData,
       });
@@ -144,7 +144,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append("url", imageUrl);
     try {
-      const res = await fetch('http://localhost:8080/generate', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/generate`, {
         method: 'POST',
         body: formData,
       });
