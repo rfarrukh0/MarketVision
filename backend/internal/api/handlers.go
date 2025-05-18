@@ -23,12 +23,15 @@ func GenerateProductDescription(svc *service.Service) gin.HandlerFunc {
 		var imageData []byte
 		var err error
 
+		println("/generate endpoint hit")
+
 		// retrieve image from form data
 		file, _, err := c.Request.FormFile("image")
 		if err == nil {
 			defer file.Close()
 			imageData, err = io.ReadAll(file)
 			if err != nil {
+				println("❌ Error reading uploaded file:", err.Error())
 				c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to read image"})
 				return
 			}
@@ -36,9 +39,11 @@ func GenerateProductDescription(svc *service.Service) gin.HandlerFunc {
 			// if no file was uploaded, retrieve from URL
 			url := c.PostForm("url")
 			if url == "" {
+				println("❌ No image or URL provided.")
 				c.JSON(http.StatusBadRequest, gin.H{"error": "No image file or URL provided"})
 				return
 			}
+			println("🌐 Image URL received:", url)
 			// retrieve from URL
 			resp, err := http.Get(url)
 			if err != nil {
