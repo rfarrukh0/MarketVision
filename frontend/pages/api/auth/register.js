@@ -11,23 +11,37 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log("Connecting to Mongo...");
     const client = await clientPromise;
+
+    console.log("Connected. Getting DB...");
     const db = client.db("mkdata");
+
+    console.log("Getting collection...");
     const users = db.collection("users");
 
+    console.log("Checking if username exists...");
     const existing = await users.findOne({ username });
-    if (existing) return res.status(400).json({ error: "Username already taken!" });
 
+    if (existing) {
+      console.log("Username taken.");
+      return res.status(400).json({ error: "Username already taken!" });
+    }
+
+    console.log("Hashing password...");
     const hash = await bcrypt.hash(password, 10);
+
+    console.log("Inserting user...");
     const result = await users.insertOne({
       username,
       password: hash,
       created_at: new Date(),
     });
 
+    console.log("User registered successfully.");
     res.status(200).json({ success: true, userId: result.insertedId });
   } catch (err) {
-    console.error(err);
+    console.error("🔥 REGISTER ERROR:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 }
