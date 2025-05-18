@@ -73,6 +73,35 @@ export default function Home() {
     setPreview(null);
   };
 
+  const savePromptToDB = async (data) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      await fetch("/api/prompts/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ prompt_result: data }),
+      });
+    } catch (err) {
+      console.error("Autosave failed:", err);
+    }
+  };
+
+
+  const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+};
+
+
   // send file to backend
   const handleAnalyzeFile = async () => {
     if (!selectedFile) return;
@@ -93,6 +122,11 @@ export default function Home() {
       }
       const data = await res.json();
       setResults(data);
+      const base64Image = await fileToBase64(selectedFile);
+      savePromptToDB({
+        ...data,
+        image: base64Image
+      });
     } catch (err) {
       setError(err.message);
     }
@@ -119,6 +153,10 @@ export default function Home() {
       }
       const data = await res.json();
       setResults(data);
+      savePromptToDB({
+        ...data,
+        image: imageUrl
+      });
     } catch (err) {
       setError(err.message);
     }
