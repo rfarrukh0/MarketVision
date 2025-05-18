@@ -1,4 +1,4 @@
-import clientPromise from "../../../utils/db";
+import clientPromise from "../../../src/utils/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

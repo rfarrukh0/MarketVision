@@ -1,24 +1,22 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../src/components/Navbar";
 
-export default function Register() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     setSuccessMsg("");
     setLoading(true);
 
-    const res = await fetch("/api/auth/register", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
 
@@ -26,9 +24,10 @@ export default function Register() {
     setLoading(false);
 
     if (!res.ok) {
-      setErrorMsg(data.error || "Registration failed.");
+      setErrorMsg(data.error || "Login failed.");
     } else {
-      setSuccessMsg("Registration successful! You can now log in.");
+      localStorage.setItem("token", data.token);
+      setSuccessMsg("Login successful!");
       setUsername("");
       setPassword("");
     }
@@ -38,8 +37,8 @@ export default function Register() {
     <>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Create Account</h1>
-        <form onSubmit={handleRegister} className="flex flex-col gap-4 w-full max-w-sm">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">Log In</h1>
+        <form onSubmit={handleLogin} className="flex flex-col gap-4 w-full max-w-sm">
           <input
             type="text"
             placeholder="Username"
@@ -63,7 +62,7 @@ export default function Register() {
             }`}
             disabled={loading}
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
@@ -75,9 +74,9 @@ export default function Register() {
         )}
 
         <p className="mt-6 text-sm text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 underline">
-            Log in here
+          Don’t have an account?{" "}
+          <a href="/register" className="text-blue-600 underline">
+            Register here
           </a>
         </p>
       </div>

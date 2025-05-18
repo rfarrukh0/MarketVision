@@ -1,5 +1,5 @@
 // src/pages/api/prompts/save.js
-import clientPromise from "../../../utils/db";
+import clientPromise from "../../../src/utils/db";
 import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {

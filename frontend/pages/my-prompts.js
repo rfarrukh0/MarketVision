@@ -1,6 +1,6 @@
 // pages/my-prompts.js
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../src/components/Navbar";
 
 export default function MyPrompts() {
   const [prompts, setPrompts] = useState([]);

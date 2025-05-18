@@ -1,6 +1,6 @@
 // pages/index.js
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../src/components/Navbar';
 
 // cards
 const FieldCard = ({ title, value }) => {
